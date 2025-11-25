@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Per-Day Wage Salary Calculator</title>
+    <meta name="description" content="Calculate your per-day salary with overtime in Indian Rupees">
+    <meta name="author" content="Wage Calculator">
+    
+    <meta property="og:title" content="Per-Day Wage Salary Calculator">
+    <meta property="og:description" content="Calculate your per-day salary with overtime in Indian Rupees">
+    <meta property="og:type" content="website">
+    
+    <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <meta name="theme-color" content="#ffffff">
+
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="icon-wrapper">
+                <svg class="calculator-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
+                    <line x1="8" y1="6" x2="16" y2="6"></line>
+                    <line x1="8" y1="10" x2="16" y2="10"></line>
+                    <line x1="8" y1="14" x2="16" y2="14"></line>
+                    <line x1="8" y1="18" x2="12" y2="18"></line>
+                </svg>
+            </div>
+            <h1>Per-Day Wage Calculator</h1>
+            <p class="subtitle">Calculate your salary with overtime in seconds</p>
+        </header>
+
+        <!-- Form Card -->
+        <div class="card form-card">
+            <form id="salaryForm">
+                <!-- Employee Name -->
+                <div class="form-group">
+                    <label for="employeeName">Employee Name *</label>
+                    <input 
+                        type="text" 
+                        id="employeeName" 
+                        placeholder="Enter employee name"
+                        required
+                    >
+                    <span class="error-message" id="employeeNameError"></span>
+                </div>
+
+                <!-- Month -->
+                <div class="form-group">
+                    <label for="month">Month *</label>
+                    <select id="month" required>
+                        <option value="">Select month</option>
+                        <option value="january">January</option>
+                        <option value="february">February</option>
+                        <option value="march">March</option>
+                        <option value="april">April</option>
+                        <option value="may">May</option>
+                        <option value="june">June</option>
+                        <option value="july">July</option>
+                        <option value="august">August</option>
+                        <option value="september">September</option>
+                        <option value="october">October</option>
+                        <option value="november">November</option>
+                        <option value="december">December</option>
+                    </select>
+                    <span class="error-message" id="monthError"></span>
+                </div>
+
+                <!-- Per Day Salary and Overtime Rate -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="perDaySalary">Per Day Salary * (₹)</label>
+                        <input 
+                            type="number" 
+                            id="perDaySalary" 
+                            step="0.01"
+                            placeholder="e.g., 1200.00"
+                            required
+                        >
+                        <span class="error-message" id="perDaySalaryError"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="overtimeSalaryPerHour">Overtime Rate * (₹/hour)</label>
+                        <input 
+                            type="number" 
+                            id="overtimeSalaryPerHour" 
+                            step="0.01"
+                            placeholder="e.g., 150.00"
+                            required
+                        >
+                        <span class="error-message" id="overtimeSalaryPerHourError"></span>
+                    </div>
+                </div>
+
+                <!-- Days Worked and Overtime Hours -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="totalDaysWorked">Days Worked *</label>
+                        <input 
+                            type="number" 
+                            id="totalDaysWorked" 
+                            step="0.5"
+                            placeholder="e.g., 22 or 22.5"
+                            required
+                        >
+                        <span class="error-message" id="totalDaysWorkedError"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="overtimeHours">Overtime Hours *</label>
+                        <input 
+                            type="number" 
+                            id="overtimeHours" 
+                            step="0.5"
+                            placeholder="e.g., 10 or 10.5"
+                            required
+                        >
+                        <span class="error-message" id="overtimeHoursError"></span>
+                    </div>
+                </div>
+
+                <!-- Buttons -->
+                <div class="button-group">
+                    <button type="submit" class="btn btn-primary">
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
+                            <line x1="8" y1="6" x2="16" y2="6"></line>
+                        </svg>
+                        Calculate Salary
+                    </button>
+                    <button type="button" class="btn btn-outline" id="resetBtn">
+                        Reset
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Result Card -->
+        <div class="card result-card" id="resultCard" style="display: none;">
+            <div class="result-content">
+                <!-- Header -->
+                <div class="result-header">
+                    <h2>Salary Breakdown</h2>
+                    <p class="result-name" id="resultName"></p>
+                </div>
+
+                <!-- Details Grid -->
+                <div class="result-grid">
+                    <!-- Regular Salary -->
+                    <div class="result-item">
+                        <div class="result-icon calendar-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                <line x1="16" y1="2" x2="16" y2="6"></line>
+                                <line x1="8" y1="2" x2="8" y2="6"></line>
+                                <line x1="3" y1="10" x2="21" y2="10"></line>
+                            </svg>
+                        </div>
+                        <div class="result-details">
+                            <p class="result-label" id="resultDaysLabel"></p>
+                            <p class="result-value" id="regularSalary"></p>
+                        </div>
+                    </div>
+
+                    <!-- Overtime Salary -->
+                    <div class="result-item">
+                        <div class="result-icon clock-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                        </div>
+                        <div class="result-details">
+                            <p class="result-label">Overtime Salary</p>
+                            <p class="result-value" id="overtimeSalary"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Total Salary -->
+                <div class="total-salary-card">
+                    <div class="total-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="12" y1="1" x2="12" y2="23"></line>
+                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                        </svg>
+                    </div>
+                    <p class="total-label">Total Salary</p>
+                    <p class="total-value" id="totalSalary"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>All amounts are in INR (₹). Results are calculated instantly.</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js')
+            .then(() => console.log('Service Worker Registered'));
+        }
+    </script>
+
+</body>
+</html>
