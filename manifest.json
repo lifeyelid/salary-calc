@@ -2,7 +2,7 @@
   "name": "Salary Calculator",
   "short_name": "SalaryCalc",
   "description": "Calculate salaries and overtime easily for daily wage and fixed salary employees.",
-  "start_url": "/index.html",
+  "start_url": "index.html",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#ffffff",
@@ -25,3 +25,4 @@
     }
   ]
 }
+
